@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, My Love ❤️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin: 20px;
+            background: #ff6699;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #ff3366;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff6699;
+            font-size: 1em;
+        }
+        .chat-box {
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .message {
+            background: #ffdde1;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="page1">
+        <h1>For You, My Love ❤️</h1>
+        <p>Click below to continue.</p>
+        <button class="button" onclick="showPage(2)">Next</button>
+    </div>
+
+    <div class="container hidden" id="page2">
+        <h2>Messages from My Heart</h2>
+        <p>Click to reveal my feelings.</p>
+        <div class="message button" onclick="revealMessage(0)">Message 1</div>
+        <p class="hidden" id="msg0">You are the most precious part of my life. ❤️</p>
+        <div class="message button" onclick="revealMessage(1)">Message 2</div>
+        <p class="hidden" id="msg1">Every moment with you is a beautiful memory. 💖</p>
+        <button class="button" onclick="showPage(3)">Next</button>
+    </div>
+
+    <div class="container hidden" id="page3">
+        <h2>Our Beautiful Moments</h2>
+        <div class="gallery">
+            <img src="image1.jpg" alt="Memory 1" width="200">
+            <img src="image2.jpg" alt="Memory 2" width="200">
+            <img src="image3.jpg" alt="Memory 3" width="200">
+            <img src="image4.jpg" alt="Memory 4" width="200">
+            <img src="image5.jpg" alt="Memory 5" width="200">
+            <img src="image6.jpg" alt="Memory 6" width="200">
+            <img src="image7.jpg" alt="Memory 7" width="200">
+        </div>
+        <p>Hope these bring back beautiful memories. ❤️</p>
+        <button class="button" onclick="showPage(4)">Next</button>
+    </div>
+
+    <div class="container hidden" id="page4">
+        <h2>Share Your Thoughts</h2>
+        <p>Write something for me after seeing this.</p>
+        <textarea id="userMessage" placeholder="Your message..."></textarea>
+        <br>
+        <button class="button" onclick="sendMessage()">Send Message</button>
+        <div class="chat-box" id="chatBox"></div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
+            document.getElementById('page' + page).classList.remove('hidden');
+            if (page === 4) {
+                loadMessages();
+            }
+        }
+        function revealMessage(index) {
+            document.getElementById('msg' + index).classList.toggle('hidden');
+        }
+        function sendMessage() {
+            let message = document.getElementById('userMessage').value;
+            if (message.trim() === "") {
+                alert("Please write something before sending.");
+                return;
+            }
+            let messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push(message);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            document.getElementById('userMessage').value = "";
+            loadMessages();
+        }
+        function loadMessages() {
+            let chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = "";
+            let messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.forEach(msg => {
+                let msgElement = document.createElement('div');
+                msgElement.classList.add('message');
+                msgElement.textContent = msg;
+                chatBox.appendChild(msgElement);
+            });
+        }
+    </script>
+</body>
+</html>
