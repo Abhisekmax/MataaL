@@ -127,9 +127,15 @@ The last thing I want to say is that I still love you, and I can’t imagine lif
         let imageIndex = 0;
         
         function showPage(page) {
-            document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
-            document.getElementById('page' + page).classList.remove('hidden');
-        }
+    document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
+    document.getElementById('page' + page).classList.remove('hidden');
+    
+    if (page === 1) {
+        imageIndex = 0; // Reset the image index to 0 when starting again
+        document.getElementById('galleryImage').src = images[imageIndex].src;
+        document.getElementById('imageText').textContent = images[imageIndex].text;
+    }
+}
         
         function nextImage() {
             imageIndex++;
